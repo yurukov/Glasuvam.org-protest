@@ -1,5 +1,4 @@
 <?php
-
 mb_internal_encoding("UTF-8");
 set_time_limit(60);
 define("CALL_SLEEP",1);
@@ -40,12 +39,11 @@ if (!$isupdate) {
   $link->query("insert LOW_PRIORITY ignore into protest_stats (num,numall) value ((select count(*) from protest where lastvisit>now()-interval 10 minute),(select count(*) from protest))");
 }
 
-$result = $link->query("SELECT country,count(ip) FROM protest where lastvisit>now()-interval 10 minute group by country order by country") or die($debug?$link->error:"0");
+$result = $link->query("SELECT * FROM protest_show") or die($debug?$link->error:"0");
 if ($result->num_rows>0) { 
   while ($row = $result->fetch_array(MYSQLI_NUM))
     echo implode(",",$row)."\n";
 }
-
 
 function getCN($ip) {
   $data = file_get_contents("http://freegeoip.net/csv/$ip");

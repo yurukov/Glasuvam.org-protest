@@ -397,7 +397,7 @@ function reload(force) {
 
       Dw = $( window ).width();
       Dh = $( window ).height();
-      mobile = Dw>640;
+      mobile = Dw<=640;
       count = 0;
       setSelf=false;
       meCN=false;
@@ -421,7 +421,7 @@ function reload(force) {
 
             if (change<0) {
               var toRemove = $(".flag-"+d[0]).filter(":not(.self)").slice(change);
-                if (mobile)
+                if (!mobile)
                   toRemove.animate({"top":Dh+200,"left":Dw/2},1000,'swing',function(){ 
                     $(this).remove(); 
                   });
@@ -435,8 +435,8 @@ function reload(force) {
                 var attempts=50; 
                 var found=false;
                 while ((attempts--)>0 && !found) {
-                  xd = Math.round(Dw*0.03+(Dw*0.94-flagSize)*Math.random());
-                  yd = Math.round(Dh*0.6+(Dh*0.37-flagSize)*Math.random());
+                xd = Math.round(10+(Dw*0.94-20-flagSize)*Math.random());
+                yd = Math.round(Dh*0.6+(Dh*0.4-10-flagSize)*Math.random());
                   found=true;
                   flags.each(function(i,d) {
                     var c = $(d).data('coords'); 
@@ -447,8 +447,8 @@ function reload(force) {
                   });              
                 }   
               } else {
-                xd = Math.round(Dw*0.03+(Dw*0.94-flagSize)*Math.random());
-                yd = Math.round(Dh*0.6+(Dh*0.37-flagSize)*Math.random());
+                xd = Math.round(10+(Dw*0.94-20-flagSize)*Math.random());
+                yd = Math.round(Dh*0.6+(Dh*0.4-10-flagSize)*Math.random());
               }
 
               if (!setSelf && meCN && d[0]==meCN) {
@@ -463,7 +463,7 @@ function reload(force) {
               } else {
                 var toAdd = $("<img src=\"blank.gif\" class=\"flag flag-"+d[0]+"\" alt=\""+d[0]+"\" title=\""+d[0].toUpperCase()+"\"></img>")
                   .data("coords",[xd,yd]);
-                if (mobile)     
+                if (!mobile)     
                   toAdd.css({"left":50,"top":50,"opacity":0})
                   .appendTo($("#flags"))
                   .animate({"left":xd,"top":yd,"opacity":1},600);
